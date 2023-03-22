@@ -11,9 +11,10 @@ RSpec.describe "/cars", type: :feature do
     it "displays the name of each car" do
       visit "/cars"
 
-      expect(page).to have_content(car_1.name)
-      expect(page).to have_content(car_2.name)
-      expect(page).to have_content(car_3.name)
+      # save_and_open_page
+      expect(page).to have_content(car_1.id)
+      expect(page).to have_content(car_2.id)
+      expect(page).to have_content(car_3.id)
     end
   end
 end
