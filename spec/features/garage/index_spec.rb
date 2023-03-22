@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe "/garage", type: :feature do
+RSpec.describe "/garages", type: :feature do
   #User Story 1
   describe "as a visitor, when i visit the garage index page" do
     let!(:garage_1){Garage.create!(indoor: true, slots: 300, city:"Denver", zipcode:"80032", name:"Cherry Creek Garage")}
