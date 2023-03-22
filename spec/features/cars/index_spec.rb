@@ -12,9 +12,9 @@ RSpec.describe "/cars", type: :feature do
       visit "/cars"
 
       # save_and_open_page
-      expect(page).to have_content(car_1.id)
-      expect(page).to have_content(car_2.id)
-      expect(page).to have_content(car_3.id)
+      expect(page).to have_content("ID: #{car_1.id}")
+      expect(page).to have_content("ID: #{car_2.id}")
+      expect(page).to have_content("ID: #{car_3.id}")
     end
   end
 end

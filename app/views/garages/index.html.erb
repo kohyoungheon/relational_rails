@@ -1,6 +1,6 @@
 <h1>Garages</h1>
 <%@garages.each do |garage| %>
 <%id = garage.id  %>
-<p> <a href="/garages/<%=id%>"><%= garage.name %></a> </p>
+<p> <a href="/garages/<%=id%>"><%= garage.name %></a> Created: <%=garage.created_at%></p>
 <%end %><br>
 <span><a href="/">Back</a></span>

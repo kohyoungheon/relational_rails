@@ -1,0 +1,13 @@
+<h1>All children for Garage <%= @garage.id %></h1>
+<% @garage.get_cars.each do |car| %>
+  <p>ID: <%= car.id %></p>
+  <p>Operational: <%= car.operational %></p>
+  <p>Miles: <%= car.miles %></p>
+  <p>Color: <%= car.color %></p>
+  <p>Owner: <%= car.owner %></p>
+  <p>Created: <%= car.created_at %></p>
+  <p>Updated: <%= car.updated_at %></p>
+  <p>--------------------------------</p>
+<% end %>
+<br>
+<p><a href= "/garages/<%=@garage.id%>">Back</a></p>

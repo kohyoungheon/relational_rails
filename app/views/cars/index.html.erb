@@ -1,6 +1,6 @@
 <h1>Cars</h1>
 <%@cars.each do |car| %>
-<p>ID: <%= car.id %></p>
+<p>ID: <a href="/cars/<%= car.id%>"><%= car.id %></a></p>
 <p>Operational: <%= car.operational %></p>
 <p>Miles: <%= car.miles %></p>
 <p>Color: <%= car.color %></p>
