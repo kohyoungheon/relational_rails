@@ -5,4 +5,8 @@ class Garage < ApplicationRecord
     cars.order(:garage_id)
   end
 
+  def total_cars
+    cars.count
+  end
+  
 end

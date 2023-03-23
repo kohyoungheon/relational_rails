@@ -7,7 +7,7 @@ RSpec.describe "/garages/:id/cars", type: :feature do
     let!(:car_1){garage_1.cars.create!(operational: true, miles: 44523, color: "blue", owner: "Adam")}
     let!(:car_2){garage_1.cars.create!(operational: true, miles: 14093, color: "black", owner: "Gregor")}
 
-    it "Displays a each car associated with the garage and all its attributes" do
+    it "Displays each car associated with the garage and all its attributes" do
       visit "/garages/#{garage_1.id}/cars"
       # save_and_open_page
 

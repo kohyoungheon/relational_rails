@@ -1,14 +1,11 @@
 class GaragesController < ApplicationController
   def index
-    @garages = Garage.all
+    @garages = Garage.all.order(created_at: :asc)
   end
 
   def show
     @garage = Garage.find(params[:id])
   end
 
-  def children
-    @garage = Garage.find(params[:id])
-    @children = Car.all
-  end
+  
 end
