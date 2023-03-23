@@ -53,4 +53,27 @@ RSpec.describe "/garage/:id", type: :feature do
       expect(page).to_not have_content("Total Cars: #{garage_1.total_cars}")
     end
   end
+
+  #User Story 10
+  describe "As a visitor, when I visit /garages/:id" do
+    let!(:garage_1){Garage.create!(indoor: true, slots: 300, city:"Denver", zipcode:"80032", name:"Cherry Creek Garage")}
+    let!(:car_1){garage_1.cars.create!(operational: true, miles: 44523, color: "blue", owner: "Adam")}
+    let!(:car_2){garage_1.cars.create!(operational: true, miles: 14093, color: "black", owner: "Gregor")}
+
+    let!(:garage_2){Garage.create!(indoor: true, slots: 512, city:"Denver", zipcode:"80234", name:"Lakewood Garage")}
+    let!(:car_3){garage_2.cars.create!(operational: false, miles: 4277, color: "white", owner: "Mose")}
+    
+    it "displays a link that takes the user to /garages/:id/cars" do
+
+      visit "/garages/#{garage_1.id}"
+      expect(page).to have_content("View all cars associated with this garage.")
+      click_link("associated") #ID of my <a href>
+      expect(page).to have_current_path("/garages/#{garage_1.id}/cars")
+
+      visit "/garages/#{garage_2.id}"
+      expect(page).to have_content("View all cars associated with this garage.")
+      click_link("associated") #ID of my <a href>
+      expect(page).to have_current_path("/garages/#{garage_2.id}/cars")
+    end
+  end
 end
