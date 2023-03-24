@@ -30,8 +30,8 @@ RSpec.describe "/garages", type: :feature do
       visit "/garages"
       # save_and_open_page
 
-      expect(@garage_2.name).to appear_before(@garage_1.name)
-      expect(@garage_1.name).to appear_before(@garage_3.name)
+      expect(@garage_3.name).to appear_before(@garage_1.name)
+      expect(@garage_1.name).to appear_before(@garage_2.name)
       
     end
 

@@ -1,6 +1,6 @@
 class GaragesController < ApplicationController
   def index
-    @garages = Garage.all.order(created_at: :asc)
+    @garages = Garage.all.order(created_at: :desc)
   end
 
   def show

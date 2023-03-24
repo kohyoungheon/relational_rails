@@ -10,12 +10,12 @@ RSpec.describe "layout", type: :feature do
     it "displays a link that takes the user to /cars" do #8
 
       visit "/"
-      expect(page).to have_content("Take me back to the cars index/garage index page!")
+      expect(page).to have_content("Take me back to the cars index/garage index/welcome page!")
       click_link("cars") #ID of my <a href>
       expect(page).to have_current_path("/cars")
 
       visit "/cars/#{car_1.id}"
-      expect(page).to have_content("Take me back to the cars index/garage index page!")
+      expect(page).to have_content("Take me back to the cars index/garage index/welcome page!")
       click_link("cars") #ID of my <a href>
       expect(page).to have_current_path("/cars")
     end
@@ -23,12 +23,12 @@ RSpec.describe "layout", type: :feature do
     it "displays a link that takes the user to /garages" do #9
 
       visit "/"
-      expect(page).to have_content("Take me back to the cars index/garage index page!")
+      expect(page).to have_content("Take me back to the cars index/garage index/welcome page!")
       click_link("garages") #ID of my <a href>
       expect(page).to have_current_path("/garages")
 
       visit "/garages/#{garage_1.id}"
-      expect(page).to have_content("Take me back to the cars index/garage index page!")
+      expect(page).to have_content("Take me back to the cars index/garage index/welcome page!")
       click_link("garages") #ID of my <a href>
       expect(page).to have_current_path("/garages")
     end
