@@ -1,0 +1,21 @@
+<form action="/cars/<%=@car.id%>" method="post">
+  <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+  <input type="hidden" name="_method" value="PATCH" />
+  <h3>Edit Car <%=@car.id%></h3>
+  <p>Operational:</p>
+  <input type='radio' name='car[operational]' value =true id = "option1" required <%= @car.operational ? "checked":"" %>/>
+  <label for ="option1">True</label>
+  <input type='radio' name='car[operational]' value =false id = "option2" required <%= !@car.operational ? "checked":"" %>/>
+  <label for ="option2">False</label>
+  <br><br>
+  <label>Miles:</label>
+  <input type='number' id="miles" placeholder="Integers" name='car[miles]' value="<%=@car.miles%>" required><br><br>
+  <label>Color:</label>
+  <input type='text' id="color" placeholder="Blue" name='car[color]' value="<%=@car.color%>" required><br><br>
+  <label>Owner:</label>
+  <input type='text' id="owner" placeholder="John Smith" name='car[owner]' value="<%=@car.owner%>" required><br><br>
+
+  <input id ="confirm_edit" type='submit' value="Update Car"/>
+</form>
+<br>
+<span><a href="/cars/<%=@car.id%>">Back</a></span>

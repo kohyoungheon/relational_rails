@@ -24,4 +24,50 @@ RSpec.describe "/cars/:id", type: :feature do
 
     end
   end
+
+  #User Story 14
+  describe "As a visitor, when i visit /cars/:id " do
+    let!(:garage_1){Garage.create!(indoor: true, slots: 300, city:"Denver", zipcode:"80032", name:"Cherry Creek Garage")}
+    let!(:car_1){garage_1.cars.create!(operational: true, miles: 44523, color: "blue", owner: "Adam")}
+
+    it "displays a link, 'Update Car' to update child" do
+      visit "/cars/#{car_1.id}"
+      expect(page).to have_content("Update Car")
+    end
+
+    it "clicking the link takes visitor to /cars/:id/edit" do
+      visit "/cars/#{car_1.id}"
+      click_link("edit_car")
+      expect(page).to have_current_path("/cars/#{car_1.id}/edit")
+    end
+
+    it "displays a form with car attributes filled in, to edit" do
+      visit "/cars/#{car_1.id}/edit"
+        expect(page).to have_content("Edit Car #{car_1.id}")
+        expect(page).to have_content("Miles:")
+        expect(page).to have_content("Color:")
+        expect(page).to have_content("Owner:")
+    end
+    it "Displays a button called 'Update Car'" do
+      visit "/cars/#{car_1.id}/edit"
+      expect(page).to have_selector(:button, 'Update Car')
+    end
+
+    it "clicking 'Update Child' updates data and redirects to show page" do
+      visit "/cars/#{car_1.id}/edit"
+
+      choose('option1')
+      fill_in('miles', with: 100001)
+      fill_in('color', with: "Rainbow")
+      fill_in('owner', with: "Jean Baptiste")
+      click_on('confirm_edit')
+
+      expect(page).to have_current_path("/cars/#{car_1.id}")
+
+      expect(page).to have_content("Miles: 100001")
+      expect(page).to have_content("Color: Rainbow")
+      expect(page).to have_content("Owner: Jean Baptiste")
+
+    end
+  end
 end
