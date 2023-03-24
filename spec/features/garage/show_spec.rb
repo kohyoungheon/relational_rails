@@ -76,4 +76,52 @@ RSpec.describe "/garage/:id", type: :feature do
       expect(page).to have_current_path("/garages/#{garage_2.id}/cars")
     end
   end
+
+    #User Story 12
+    describe "as a visitor, when I visit /garages/:id" do
+      let!(:garage_1){Garage.create!(indoor: true, slots: 300, city:"Denver", zipcode:"80032", name:"Cherry Creek Garage")}
+      let!(:car_1){garage_1.cars.create!(operational: true, miles: 44523, color: "blue", owner: "Adam")}
+      let!(:car_2){garage_1.cars.create!(operational: true, miles: 14093, color: "black", owner: "Gregor")}
+
+      it "displays a link to update the garage called Update Garage" do
+        visit "/garages/#{garage_1.id}"
+        expect(page).to have_content("Update Garage")
+      end
+
+      it "when I click the link, it redirects me to /garage/:id/edit" do
+        visit "/garages/#{garage_1.id}"
+        click_link("edit_garage")
+        expect(page).to have_current_path("/garages/#{garage_1.id}/edit")
+      end
+
+      it "Displays a form to edit garage attributes" do
+        visit "/garages/#{garage_1.id}/edit"
+        expect(page).to have_content("Edit Garage #{garage_1.id}")
+        expect(page).to have_content("Slots:")
+        expect(page).to have_content("City:")
+        expect(page).to have_content("Zipcode:")
+        expect(page).to have_content("Name:")
+      end
+
+      it "sends PATCH request to /garage/:id when I submit the form and redirects to /garage/:id" do
+        visit "/garages/#{garage_1.id}/edit"
+        click_on("confirm_edit")
+        expect(page).to have_current_path("/garages/#{garage_1.id}")
+      end
+
+      it "Updates the info and displays new info on garage/:id/cars" do
+        visit "/garages/#{garage_1.id}/edit"
+        fill_in('name', with: 'Big Garage')
+        fill_in('slots', with: '222')
+        fill_in('city', with: 'Albany')
+        fill_in('zipcode', with: '90034')
+        click_on("confirm_edit")
+        expect(page).to have_current_path("/garages/#{garage_1.id}")
+
+        expect(page).to have_content("Slots: 222")
+        expect(page).to have_content("City: Albany")
+        expect(page).to have_content("Zipcode: 90034")
+        expect(page).to have_content("Name: Big Garage")
+      end
+    end
 end

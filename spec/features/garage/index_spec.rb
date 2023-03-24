@@ -43,4 +43,56 @@ RSpec.describe "/garages", type: :feature do
 
     end
   end
+
+  #User Story 11
+  it "shows a link to create a new Garage. 'Create New Garage' " do
+    visit "/garages"
+    expect(page).to have_content("Create New Garage")
+  end
+  
+  it "clicking New Garage takes User to /garage/new" do
+    visit "/garages"
+    click_link("new_garage") #ID of my <a href>
+    expect(page).to have_current_path("/garages/new")
+  end
+
+  it "Displays a form to input garage attributes" do
+    visit "/garages/new"
+    expect(page).to have_content("Create a New Garage!")
+    expect(page).to have_content("Indoor:")
+    expect(page).to have_content("True")
+    expect(page).to have_content("False")
+    expect(page).to have_content("Slots:")
+    expect(page).to have_content("City:")
+  end
+
+  it "Displays a 'Create Garage' button" do
+    visit "/garages/new"
+    expect(page).to have_selector(:button, 'Create Garage')
+  end
+
+  it "sends POST request to /parents and creates a new record" do
+    visit "/garages/new"
+    choose('option1')
+    fill_in('slots', with: 55)
+    fill_in('city', with: "LA")
+    fill_in('zipcode', with: "80017")
+    fill_in('name', with: "LA Garage")
+    click_on('submit')
+    expect(page).to have_current_path("/garages")
+
+  end
+
+  it "redirects to the parent index page and displays newly created parent" do
+    visit "/garages/new"
+    choose('option1')
+    fill_in('slots', with: 55)
+    fill_in('city', with: "LA")
+    fill_in('zipcode', with: "80017")
+    fill_in('name', with: "LA Garage")
+    click_on('submit')
+    expect(page).to have_current_path("/garages")
+
+    expect(page).to have_content("LA Garage Created:")
+  end
 end

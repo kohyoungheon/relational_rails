@@ -1,12 +1,16 @@
 <h2><%= @garage.name %></h2>
 <p>ID: <%=@garage.id  %></p>
 <p>Name: <%=@garage.name  %></p>
+<p>Indoor: <%=@garage.indoor  %></p>
 <p>Slots: <%=@garage.slots  %></p>
 <p>City: <%=@garage.city  %></p>
 <p>Zipcode: <%=@garage.zipcode  %></p>
 <p>Created: <%=@garage.created_at %></p>
 <p>Updated: <%=@garage.updated_at %></p>
 <p>Total Cars: <%= @garage.total_cars %></p>
+<br>
+<a id="edit_garage" href = "/garages/<%="#{@garage.id}"%>/edit"><button type="button">Update Garage</button></a>
+<br>
 <br>
 <p><a id="associated" href="/garages/<%=@garage.id%>/cars">View all cars associated with this garage.</a></p>
 <br>
