@@ -206,7 +206,7 @@ Next to every parent, I see a link to delete that parent
 When I click the link
 I am returned to the Parent Index Page where I no longer see that parent
 
-[ ] done
+[x] done
 User Story 23, Child Delete From Childs Index Page 
 
 As a visitor

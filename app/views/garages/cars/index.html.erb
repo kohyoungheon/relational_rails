@@ -15,6 +15,7 @@
   <p>Created: <%= car.created_at %></p>
   <p>Updated: <%= car.updated_at %></p>
   <a id= "<%=car.id%>_edit"href ="/cars/<%=car.id%>/edit"><p>Edit Car <%= car.id %></p></a>
+  <%= button_to "Delete Car: #{car.id}", "/cars/#{car.id}", method: :delete, :form=>{:id=>"#{car.id}_delete"}%>
   <p>--------------------------------</p>
 <% end %>
 <br>
