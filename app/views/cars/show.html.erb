@@ -10,4 +10,10 @@
 <a id="edit_car" href = "/cars/<%="#{@car.id}"%>/edit"><button type="button">Update Car</button></a>
 <br>
 <br>
+<form action="/cars/<%= @car.id %>" method="POST">
+    <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+    <input type="hidden" name="_method" value="DELETE">
+    <input id ="delete" style ="background-color:red;color:white" type="submit" value="DELETE THIS CAR!"/>
+  </form>
+<br>
 <span><a href="/cars">Back</a></span>

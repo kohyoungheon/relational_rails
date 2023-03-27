@@ -52,4 +52,33 @@ RSpec.describe "/cars", type: :feature do
 
     end
   end
+
+  #User Story 18
+  describe "as a visitor, when I visit /cars" do
+    let!(:garage_1){Garage.create!(indoor: true, slots: 300, city:"Denver", zipcode:"80032", name:"Cherry Creek Garage")}
+    let!(:car_1){garage_1.cars.create!(operational: true, miles: 44523, color: "blue", owner: "Adam")}
+    let!(:car_2){garage_1.cars.create!(operational: true, miles: 14093, color: "black", owner: "Gregor")}
+    let!(:car_3){garage_1.cars.create!(operational: true, miles: 204011, color: "orange", owner: "Sandor")}
+
+    it "Next to every child, I see a link to edit that child called Edit Car" do
+      visit "/cars"
+      expect(page).to have_content("Edit Car #{car_1.id}")
+      expect(page).to have_content("Edit Car #{car_2.id}")
+      expect(page).to have_content("Edit Car #{car_3.id}")
+    end
+
+    it "redirects to /cars/:id.edit" do
+      visit "/cars"
+      click_link("#{car_1.id}_edit")
+      expect(page).to have_current_path("/cars/#{car_1.id}/edit")
+
+      visit "/cars"
+      click_link("#{car_2.id}_edit")
+      expect(page).to have_current_path("/cars/#{car_2.id}/edit")
+
+      visit "/cars"
+      click_link("#{car_3.id}_edit")
+      expect(page).to have_current_path("/cars/#{car_3.id}/edit")
+    end
+  end
 end

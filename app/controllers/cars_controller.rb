@@ -22,4 +22,9 @@ class CarsController < ApplicationController
     car.save
     redirect_to "/cars/#{car.id}"
   end
+
+  def destroy
+    Car.destroy(params[:id])
+    redirect_to "/cars/"
+  end
 end

@@ -124,4 +124,52 @@ RSpec.describe "/garage/:id", type: :feature do
         expect(page).to have_content("Name: Big Garage")
       end
     end
+
+    #User Story 19
+    describe "As a visitor, When i visit /garages/:id" do
+      let!(:garage_1){Garage.create!(indoor: true, slots: 300, city:"Denver", zipcode:"80032", name:"Cherry Creek Garage")}
+      let!(:car_1){garage_1.cars.create!(operational: true, miles: 44523, color: "blue", owner: "Adam")}
+      let!(:car_2){garage_1.cars.create!(operational: true, miles: 14093, color: "black", owner: "Gregor")}
+
+      let!(:garage_2){Garage.create!(indoor: true, slots: 512, city:"Denver", zipcode:"80234", name:"Lakewood Garage")}
+      let!(:car_3){garage_2.cars.create!(operational: true, miles: 4277, color: "white", owner: "Mose")}
+
+
+      it "displays link 'DELETE THIS GARAGE'" do
+        visit "/garages/#{garage_1.id}"
+        expect(page).to have_selector(:button, 'DELETE THIS GARAGE')
+        visit "/garages/#{garage_2.id}"
+        expect(page).to have_selector(:button, 'DELETE THIS GARAGE')
+      end
+      
+      it "clicking the link deletes the parent(and all children) and redirects to /garages" do
+        visit "/cars" #Cars index to check state before deletion (boolean set to true cars only)
+        
+        expect(page).to have_content("Owner: Adam")
+        expect(page).to have_content("Miles: 44523")
+        expect(page).to have_content("Owner: Gregor")
+        expect(page).to have_content("Miles: 14093")
+        expect(page).to have_content("Owner: Mose")
+        expect(page).to have_content("Miles: 4277")
+
+        visit "/garages" #Check state of Garages index before deletion
+        expect(page).to have_content("Cherry Creek Garage")
+        expect(page).to have_content("Lakewood Garage")
+
+        visit "/garages/#{garage_1.id}"
+        click_button('DELETE THIS GARAGE')
+        expect(page).to have_current_path("/garages")
+        expect(page).to have_content("Lakewood Garage")
+        expect(page).to_not have_content("Cherry Creek Garage")
+
+        visit "/cars"
+        expect(page).to have_content("Owner: Mose")
+        expect(page).to have_content("Miles: 4277")
+
+        expect(page).to_not have_content("Owner: Adam")
+        expect(page).to_not have_content("Miles: 44523")
+        expect(page).to_not have_content("Owner: Gregor")
+        expect(page).to_not have_content("Miles: 14093")
+      end
+    end
 end

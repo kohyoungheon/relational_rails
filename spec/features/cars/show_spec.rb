@@ -70,4 +70,43 @@ RSpec.describe "/cars/:id", type: :feature do
 
     end
   end
+
+  #User Story 20
+  describe "as a visitor, when i visit /cars/:id" do
+    let!(:garage_1){Garage.create!(indoor: true, slots: 300, city:"Denver", zipcode:"80032", name:"Cherry Creek Garage")}
+    let!(:car_1){garage_1.cars.create!(operational: true, miles: 44523, color: "blue", owner: "Adam")}
+    let!(:car_2){garage_1.cars.create!(operational: true, miles: 14093, color: "black", owner: "Gregor")}
+    let!(:car_3){garage_1.cars.create!(operational: true, miles: 204011, color: "orange", owner: "Sandor")}
+
+    it "displays a link 'Delete This Car'" do
+      visit "/cars/#{car_1.id}"
+      expect(page).to have_selector(:button, 'DELETE THIS CAR!')
+    end
+
+    it "clicking the link deletes the car and redirects to /garages/:id/cars" do
+      visit "/cars/#{car_1.id}"
+      click_on('delete')
+
+      expect(page).to have_current_path("/cars/")
+      expect(page).to have_content("Owner: Gregor")
+      expect(page).to have_content("Miles: 14093")
+      expect(page).to have_content("Owner: Sandor")
+      expect(page).to have_content("Miles: 204011")
+
+      expect(page).to_not have_content("Owner: Adam")
+      expect(page).to_not have_content("Miles: 44523")
+
+      visit "/cars/#{car_2.id}"
+      click_on('delete')
+
+      expect(page).to have_current_path("/cars/")
+      expect(page).to have_content("Owner: Sandor")
+      expect(page).to have_content("Miles: 204011")
+
+      expect(page).to_not have_content("Owner: Gregor")
+      expect(page).to_not have_content("Miles: 14093")
+      expect(page).to_not have_content("Owner: Adam")
+      expect(page).to_not have_content("Miles: 44523")
+    end
+  end
 end

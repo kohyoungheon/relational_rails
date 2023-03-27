@@ -1,5 +1,12 @@
 <h1>All children for Garage <%= @garage.id %></h1>
-<% @garage.get_cars.each do |car| %>
+<p><a id ="sort" href="/garages/<%=@garage.id%>/cars/?sort=true">Sort Alphabetically (by owner)</a></p>
+<form action="/garages/<%= @garage.id %>/cars/?miles=">
+<label>Return records with more than:</label>
+<input type = "number" id="filter_miles" placeholder = "MILES" name="miles" required>
+<input type="submit" value="Filter">
+</form>
+
+<% @cars.each do |car| %>
   <p>ID: <%= car.id %></p>
   <p>Operational: <%= car.operational %></p>
   <p>Miles: <%= car.miles %></p>
@@ -7,6 +14,7 @@
   <p>Owner: <%= car.owner %></p>
   <p>Created: <%= car.created_at %></p>
   <p>Updated: <%= car.updated_at %></p>
+  <a id= "<%=car.id%>_edit"href ="/cars/<%=car.id%>/edit"><p>Edit Car <%= car.id %></p></a>
   <p>--------------------------------</p>
 <% end %>
 <br>

@@ -41,4 +41,8 @@ class GaragesController < ApplicationController
     redirect_to "/garages/#{garage.id}"
   end
   
+  def destroy
+    Garage.destroy(params[:id])
+    redirect_to "/garages"
+  end
 end

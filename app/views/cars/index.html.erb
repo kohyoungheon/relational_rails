@@ -1,6 +1,6 @@
 <h1>Cars</h1>
 <%@cars.each do |car| %>
-<p>ID: <a href="/cars/<%= car.id%>"><%= car.id %></a></p>
+<p>ID: <a style = "border-bottom: 2px solid green" href="/cars/<%= car.id%>"><%= car.id %></a></p>
 <p>Operational: <%= car.operational %></p>
 <p>Miles: <%= car.miles %></p>
 <p>Color: <%= car.color %></p>
@@ -8,6 +8,7 @@
 <p>Garage ID: <%= car.garage_id %></p>
 <p>Created: <%= car.created_at %></p>
 <p>Updated: <%= car.updated_at %></p>
+<a id="<%=car.id%>_edit" href = "/cars/<%=car.id%>/edit"><p>Edit Car <%=car.id%></p></a>
 <p>----------------------------------------</p>
 <%end %><br>
 <span><a href="/">Back</a></span>

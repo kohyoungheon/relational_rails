@@ -69,4 +69,66 @@ RSpec.describe "/garages/:id/cars", type: :feature do
       expect(page).to have_content("Owner: Jim")
     end
   end
+
+  #User Story 16
+  describe "As a visitor, when I visit /garages/:id/cars" do
+    let!(:garage_1){Garage.create!(indoor: true, slots: 300, city:"Denver", zipcode:"80032", name:"Cherry Creek Garage")}
+    let!(:car_1){garage_1.cars.create!(operational: true, miles: 44523, color: "blue", owner: "Xavier")}
+    let!(:car_2){garage_1.cars.create!(operational: true, miles: 14093, color: "black", owner: "Gregor")}
+    let!(:car_3){garage_1.cars.create!(operational: true, miles: 93324, color: "brown", owner: "Alex")}
+
+    it "has a link called Sort Alphabetically" do
+      visit "/garages/#{garage_1.id}/cars"
+      expect(page).to have_content("Sort Alphabetically")
+      expect(car_1.owner).to appear_before(car_2.owner)
+      expect(car_2.owner).to appear_before(car_3.owner)
+
+    end
+
+    it"clicking the link takes me back to /garages/:id/cars, where cars are sorted" do
+      visit "/garages/#{garage_1.id}/cars"
+      click_on("sort")
+      expect(page).to have_current_path("/garages/#{garage_1.id}/cars/?sort=true")
+      expect(car_3.owner).to appear_before(car_2.owner)
+      expect(car_2.owner).to appear_before(car_1.owner)
+    end
+  end
+
+  #User Story 18
+  describe "As a visitor, when I visit /garages/:id/cars" do
+    let!(:garage_1){Garage.create!(indoor: true, slots: 300, city:"Denver", zipcode:"80032", name:"Cherry Creek Garage")}
+    let!(:car_1){garage_1.cars.create!(operational: true, miles: 44523, color: "blue", owner: "Adam")}
+    let!(:car_2){garage_1.cars.create!(operational: true, miles: 14093, color: "black", owner: "Gregor")}
+    let!(:car_3){garage_1.cars.create!(operational: true, miles: 4277, color: "white", owner: "Mose")}
+
+    it "has a link next to each car called Edit Car" do
+      visit "/garages/#{garage_1.id}/cars/"
+      expect(page).to have_content("Edit Car #{car_1.id}")
+      expect(page).to have_content("Edit Car #{car_2.id}")
+      expect(page).to have_content("Edit Car #{car_3.id}")
+    end
+
+    it "redirects to /garages/:id/cars/edit" do
+      visit "/garages/#{garage_1.id}/cars/"
+      click_on("#{car_1.id}_edit")
+      expect(page).to have_current_path("/cars/#{car_1.id}/edit")
+
+      visit "/garages/#{garage_1.id}/cars/"
+      click_on("#{car_2.id}_edit")
+      expect(page).to have_current_path("/cars/#{car_2.id}/edit")
+
+      visit "/garages/#{garage_1.id}/cars/"
+      click_on("#{car_3.id}_edit")
+      expect(page).to have_current_path("/cars/#{car_3.id}/edit")
+    end
+  end
+
+  #User Story 21
+  describe "As a visitor, when i visit /garages/:id/cars" do
+    it "displays a form that allows me to input a number value and submit button" do
+      
+    end
+    it "when clicked, it only return records with more Miles than entered value"
+    it "redirects to same page and displays filtered results"
+  end
 end

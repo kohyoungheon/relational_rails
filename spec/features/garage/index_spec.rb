@@ -95,4 +95,36 @@ RSpec.describe "/garages", type: :feature do
 
     expect(page).to have_content("LA Garage Created:")
   end
+
+  #User Story 17
+  describe "as a user, when i visit /garages" do
+    let!(:garage_1){Garage.create!(indoor: true, slots: 300, city:"Denver", zipcode:"80032", name:"Cherry Creek Garage")}
+    let!(:garage_2){Garage.create!(indoor: true, slots: 512, city:"Denver", zipcode:"80234", name:"Lakewood Garage")}
+    let!(:garage_3){Garage.create!(indoor: false, slots: 800, city:"Boulder", zipcode:"81032", name:"Boulder Garage")}
+
+    it "displays edit next to each garage" do
+      visit "/garages"
+      expect(page).to have_content(garage_1.name)
+      expect(page).to have_content("Edit Garage #{garage_1.id}")
+      expect(page).to have_content(garage_2.name)
+      expect(page).to have_content("Edit Garage #{garage_2.id}")
+      expect(page).to have_content(garage_3.name)
+      expect(page).to have_content("Edit Garage #{garage_3.id}")
+    end
+
+    it "clicking edit takes the user to that garages/:id/edit" do
+      visit "/garages"
+      click_on("#{garage_1.id}_edit")
+      expect(page).to have_current_path("/garages/#{garage_1.id}/edit")
+  
+      visit "/garages"
+      click_on("#{garage_2.id}_edit")
+      expect(page).to have_current_path("/garages/#{garage_2.id}/edit")
+  
+      visit "/garages"
+      click_on("#{garage_3.id}_edit")
+      expect(page).to have_current_path("/garages/#{garage_3.id}/edit")
+    end
+
+  end
 end

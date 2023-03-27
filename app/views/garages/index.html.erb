@@ -1,7 +1,8 @@
 <h1>Garages</h1>
 <%@garages.each do |garage| %>
+<br>
 <%id = garage.id  %>
-<p> <a href="/garages/<%=id%>"><%= garage.name %></a> Created: <%=garage.created_at%></p>
+<p style="display: inline-block"> <a href="/garages/<%=id%>"><%= garage.name %></a> Created: <%=garage.created_at%> </p><a id="<%=garage.id%>_edit"href = "/garages/<%=garage.id%>/edit"><span style="display:inline-block margin-left:10px"> Edit Garage <%=garage.id%></span></a>
 <%end %><br>
 <a id="new_garage" href = "/garages/new"><button type="button">Create New Garage</button></a>
 <br>

@@ -139,7 +139,7 @@ As a visitor
 When I visit the child index
 Then I only see records where the boolean column is `true`
 
-[ ] done
+[x] done
 User Story 16, Sort Parent's Children in Alphabetical Order by name 
 
 As a visitor
@@ -147,3 +147,70 @@ When I visit the Parent's children Index Page
 Then I see a link to sort children in alphabetical order
 When I click on the link
 I'm taken back to the Parent's children Index Page where I see all of the parent's children in alphabetical order
+
+[x] done
+User Story 17, Parent Update From Parent Index Page 
+
+As a visitor
+When I visit the parent index page
+Next to every parent, I see a link to edit that parent's info
+When I click the link
+I should be taken to that parent's edit page where I can update its information just like in User Story 12
+
+[x] done
+User Story 18, Child Update From Childs Index Page 
+
+As a visitor
+When I visit the `child_table_name` index page or a parent `child_table_name` index page
+Next to every child, I see a link to edit that child's info
+When I click the link
+I should be taken to that `child_table_name` edit page where I can update its information just like in User Story 14
+
+[x] done
+User Story 19, Parent Delete 
+
+As a visitor
+When I visit a parent show page
+Then I see a link to delete the parent
+When I click the link "Delete Parent"
+Then a 'DELETE' request is sent to '/parents/:id',
+the parent is deleted, and all child records are deleted
+and I am redirected to the parent index page where I no longer see this parent
+
+[x] done
+User Story 20, Child Delete 
+
+As a visitor
+When I visit a child show page
+Then I see a link to delete the child "Delete Child"
+When I click the link
+Then a 'DELETE' request is sent to '/child_table_name/:id',
+the child is deleted,
+and I am redirected to the child index page where I no longer see this child
+
+[ ] done
+User Story 21, Display Records Over a Given Threshold 
+
+As a visitor
+When I visit the Parent's children Index Page
+I see a form that allows me to input a number value
+When I input a number value and click the submit button that reads 'Only return records with more than `number` of `column_name`'
+Then I am brought back to the current index page with only the records that meet that threshold shown.
+
+[ ] done
+User Story 22, Parent Delete From Parent Index Page 
+
+As a visitor
+When I visit the parent index page
+Next to every parent, I see a link to delete that parent
+When I click the link
+I am returned to the Parent Index Page where I no longer see that parent
+
+[ ] done
+User Story 23, Child Delete From Childs Index Page 
+
+As a visitor
+When I visit the `child_table_name` index page or a parent `child_table_name` index page
+Next to every child, I see a link to delete that child
+When I click the link
+I should be taken to the `child_table_name` index page where I no longer see that child

@@ -12,6 +12,12 @@
 <a id="edit_garage" href = "/garages/<%="#{@garage.id}"%>/edit"><button type="button">Update Garage</button></a>
 <br>
 <br>
+ <form action="/garages/<%= @garage.id %>" method="POST">
+    <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+    <input type="hidden" name="_method" value="DELETE">
+    <input style ="background-color:red;color:white" type="submit" value="DELETE THIS GARAGE"/>
+  </form>
+<br>
 <p><a id="associated" href="/garages/<%=@garage.id%>/cars">View all cars associated with this garage.</a></p>
 <br>
 <span><a href="/garages">Back</a></span>

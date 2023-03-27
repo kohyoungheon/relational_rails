@@ -1,5 +1,5 @@
 class Garage < ApplicationRecord
-  has_many :cars
+  has_many :cars, :dependent => :destroy
 
   def get_cars
     cars.order(:garage_id)

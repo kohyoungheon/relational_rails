@@ -1,6 +1,16 @@
 class Garages::CarsController < ApplicationController
   def index
     @garage = Garage.find(params[:id])
+    @cars = @garage.cars
+
+    if params['miles']
+      @cars = @cars.where("miles > #{params['miles']}")
+    end
+
+    if params['sort']
+      @cars = @cars.order(:owner)
+    end
+  
   end
 
   def new
@@ -18,6 +28,6 @@ class Garages::CarsController < ApplicationController
       car.save
 
       redirect_to "/garages/#{@garage.id}/cars"
-    end
+  end
 
 end
