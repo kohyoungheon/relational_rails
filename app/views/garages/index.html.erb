@@ -2,7 +2,13 @@
 <%@garages.each do |garage| %>
 <br>
 <%id = garage.id  %>
-<p style="display: inline-block"> <a href="/garages/<%=id%>"><%= garage.name %></a> Created: <%=garage.created_at%> </p><a id="<%=garage.id%>_edit"href = "/garages/<%=garage.id%>/edit"><span style="display:inline-block margin-left:10px"> Edit Garage <%=garage.id%></span></a>
+<p style="display: inline-block"> <a href="/garages/<%=id%>"><%= garage.name %></a> Created: <%=garage.created_at%> </p>
+<a id="<%=garage.id%>_edit"href = "/garages/<%=garage.id%>/edit"><span style="display:inline-block margin-left:30px"> Edit Garage <%=garage.id%></span></a>
+<form style= "margin-left: 50px; display:inline-block" action="/garages/<%=garage.id%>" method="POST">
+    <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+    <input type="hidden" name="_method" value="DELETE">
+    <input id ="delete_<%=garage.id%>" style ="background-color:red;color:white" type="submit" value="DELETE THIS GARAGE!"/>
+  </form>
 <%end %><br>
 <a id="new_garage" href = "/garages/new"><button type="button">Create New Garage</button></a>
 <br>

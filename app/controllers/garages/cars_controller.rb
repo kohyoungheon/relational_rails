@@ -1,16 +1,7 @@
 class Garages::CarsController < ApplicationController
   def index
     @garage = Garage.find(params[:id])
-    @cars = @garage.cars
-
-    if params['miles']
-      @cars = @cars.where("miles > #{params['miles']}")
-    end
-
-    if params['sort']
-      @cars = @cars.order(:owner)
-    end
-  
+    @cars = @garage.sort_alphabetically(params)
   end
 
   def new

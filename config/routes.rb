@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   get "/garages/:id/cars/new", to: "garages/cars#new"
   post "/garages/:id/cars", to: "garages/cars#create"
   delete "/garages/:id", to: "garages#destroy"
+  delete "/garages/", to: "garages#destroy"
 
   get "/cars", to: "cars#index"
   get "/cars/:id", to: "cars#show"

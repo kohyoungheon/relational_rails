@@ -125,6 +125,49 @@ RSpec.describe "/garages", type: :feature do
       click_on("#{garage_3.id}_edit")
       expect(page).to have_current_path("/garages/#{garage_3.id}/edit")
     end
-
   end
+
+  # User Story 22
+  describe "as a user, when i visit /garages" do
+    let!(:garage_1){Garage.create!(indoor: true, slots: 300, city:"Denver", zipcode:"80032", name:"Cherry Creek Garage")}
+    let!(:garage_2){Garage.create!(indoor: true, slots: 512, city:"Denver", zipcode:"80234", name:"Lakewood Garage")}
+    let!(:garage_3){Garage.create!(indoor: false, slots: 800, city:"Boulder", zipcode:"81032", name:"Boulder Garage")}
+
+    it "displays a link next to each garage called 'DELETE THIS GARAGE!'" do
+      visit "/garages"
+      expect(page).to have_content("#{garage_1.name} Created:")
+      expect(page).to have_selector(:button, "delete_#{garage_1.id}")
+      expect(page).to have_content("#{garage_2.name} Created:")
+      expect(page).to have_selector(:button, "delete_#{garage_2.id}")
+      expect(page).to have_content("#{garage_3.name} Created:")
+      expect(page).to have_selector(:button, "delete_#{garage_3.id}")
+    end
+
+    it "clicking the link deletes garage and redirects to /garages,and displays updated records" do
+      visit "/garages"
+      click_on("delete_#{garage_3.id}")
+      expect(page).to have_current_path("/garages")
+
+      expect(page).to have_content("#{garage_1.name} Created:")
+      expect(page).to have_selector(:button, "delete_#{garage_1.id}")
+      expect(page).to have_content("#{garage_2.name} Created:")
+      expect(page).to have_selector(:button, "delete_#{garage_2.id}")
+
+      expect(page).to_not have_content("#{garage_3.name} Created:")
+      expect(page).to_not have_selector(:button, "delete_#{garage_3.id}")
+
+      visit "/garages"
+      click_on("delete_#{garage_2.id}")
+      expect(page).to have_current_path("/garages")
+
+      expect(page).to have_content("#{garage_1.name} Created:")
+      expect(page).to have_selector(:button, "delete_#{garage_1.id}")
+
+      expect(page).to_not have_content("#{garage_2.name} Created:")
+      expect(page).to_not have_selector(:button, "delete_#{garage_2.id}")
+      expect(page).to_not have_content("#{garage_3.name} Created:")
+      expect(page).to_not have_selector(:button, "delete_#{garage_3.id}")
+    end
+  end
+
 end

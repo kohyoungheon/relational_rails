@@ -3,7 +3,7 @@
 <form action="/garages/<%= @garage.id %>/cars/?miles=">
 <label>Return records with more than:</label>
 <input type = "number" id="filter_miles" placeholder = "MILES" name="miles" required>
-<input type="submit" value="Filter">
+<input type="submit" value="Filter" id="submit_filter">
 </form>
 
 <% @cars.each do |car| %>

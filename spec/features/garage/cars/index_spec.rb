@@ -125,10 +125,31 @@ RSpec.describe "/garages/:id/cars", type: :feature do
 
   #User Story 21
   describe "As a visitor, when i visit /garages/:id/cars" do
+    let!(:garage_1){Garage.create!(indoor: true, slots: 300, city:"Denver", zipcode:"80032", name:"Cherry Creek Garage")}
+    let!(:car_1){garage_1.cars.create!(operational: true, miles: 44523, color: "blue", owner: "Adam")}
+    let!(:car_2){garage_1.cars.create!(operational: true, miles: 14093, color: "black", owner: "Gregor")}
+    let!(:car_3){garage_1.cars.create!(operational: true, miles: 4277, color: "white", owner: "Mose")}
+
     it "displays a form that allows me to input a number value and submit button" do
-      
+      visit "/garages/#{garage_1.id}/cars"
+      expect(page).to have_content("Return records with more than:")
+      expect(page).to have_selector("input[id='filter_miles']")
     end
-    it "when clicked, it only return records with more Miles than entered value"
-    it "redirects to same page and displays filtered results"
+
+    it "when clicked, it redirects to same page and returns records with more Miles than entered value" do
+      visit "/garages/#{garage_1.id}/cars"
+      fill_in('filter_miles', with: "40000")
+      click_on("submit_filter")
+      expect(page).to have_current_path("/garages/#{garage_1.id}/cars/?miles=40000")
+
+      expect(page).to have_content("Owner: Adam")
+      expect(page).to have_content("Miles: 44523")
+
+      expect(page).to_not have_content("Owner: Gregor")
+      expect(page).to_not have_content("Miles: 14093")
+      expect(page).to_not have_content("Owner: Mose")
+      expect(page).to_not have_content("Miles: 4277")
+
+    end
   end
 end

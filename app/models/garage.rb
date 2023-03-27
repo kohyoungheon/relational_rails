@@ -9,4 +9,16 @@ class Garage < ApplicationRecord
     cars.count
   end
   
+  def sort_alphabetically(params)
+    @cars = self.cars
+    if params['miles']
+      @cars = @cars.where("miles > #{params['miles']}")
+    end
+  
+    if params['sort']
+      @cars = @cars.order(:owner)
+    end
+    @cars
+  end
+  
 end
