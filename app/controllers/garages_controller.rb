@@ -1,6 +1,12 @@
 class GaragesController < ApplicationController
   def index
     @garages = Garage.all.order(created_at: :desc)
+    if params["childsort"]
+      @garages = Garage.left_joins(:cars)
+                        .select("garages.*, count(cars.id) as cars_count")
+                        .group("garages.id")
+                        .order("cars_count DESC")
+    end
   end
 
   def show

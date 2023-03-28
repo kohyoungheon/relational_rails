@@ -1,10 +1,11 @@
 <h1>Garages</h1>
-<%= link_to "Sort by Child Count", "/garages?childsort"%>
+<%= link_to "Sort by Child Count", "/garages?childsort=true"%>
 <br><br>
 <%@garages.each do |garage| %>
 <br>
 <%id = garage.id  %>
 <p style="display: inline-block"> <a href="/garages/<%=id%>"><%= garage.name %></a> Created: <%=garage.created_at%> </p>
+<span>/ Child Count: <%=garage.total_cars%></span>
 <a id="<%=garage.id%>_edit"href = "/garages/<%=garage.id%>/edit"><span style="display:inline-block margin-left:30px"> Edit Garage <%=garage.id%></span></a>
 <form style= "margin-left: 50px; display:inline-block" action="/garages/<%=garage.id%>" method="POST">
     <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">

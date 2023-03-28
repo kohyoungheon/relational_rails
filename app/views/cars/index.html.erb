@@ -1,4 +1,4 @@
-<h1>Cars</h1>
+<h1>Cars (only if operational:true)</h1>
 <%@cars.each do |car| %>
 <p>ID: <a style = "border-bottom: 2px solid green" href="/cars/<%= car.id%>"><%= car.id %></a></p>
 <p>Operational: <%= car.operational %></p>

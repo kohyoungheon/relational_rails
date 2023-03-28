@@ -20,13 +20,4 @@ class Garage < ApplicationRecord
     end
     @cars
   end
-  
-  # def order_by_children(params)
-  #   @garages = Garage.all.order(created_at: :desc)
-
-  #   if params['childsort']
-  #     @garages = @garages.order(@garages.total_cars)
-  #   end
-  #   @garages
-  # end
 end

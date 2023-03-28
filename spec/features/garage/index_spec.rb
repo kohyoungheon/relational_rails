@@ -98,6 +98,7 @@ RSpec.describe "/garages", type: :feature do
 
   #User Story 17
   describe "as a user, when i visit /garages" do
+    
     let!(:garage_1){Garage.create!(indoor: true, slots: 300, city:"Denver", zipcode:"80032", name:"Cherry Creek Garage")}
     let!(:garage_2){Garage.create!(indoor: true, slots: 512, city:"Denver", zipcode:"80234", name:"Lakewood Garage")}
     let!(:garage_3){Garage.create!(indoor: false, slots: 800, city:"Boulder", zipcode:"81032", name:"Boulder Garage")}
@@ -170,14 +171,42 @@ RSpec.describe "/garages", type: :feature do
     end
   end
 
-    #Extension 1
-  # describe "as a user, when I visit /garages" do
-  #   let!(:garage_1){Garage.create!(indoor: true, slots: 300, city:"Denver", zipcode:"80032", name:"Cherry Creek Garage")}
-  #   let!(:garage_2){Garage.create!(indoor: true, slots: 512, city:"Denver", zipcode:"80234", name:"Lakewood Garage")}
-  #   let!(:garage_3){Garage.create!(indoor: false, slots: 800, city:"Boulder", zipcode:"81032", name:"Boulder Garage")}
+    # Extension 1
+    describe "as a user, when I visit /garages" do
+      before(:each) do
+        @garage_1=Garage.create!(indoor: true, slots: 300, city:"Denver", zipcode:"80032", name:"Cherry Creek Garage", created_at: 2.day.ago)
+        @garage_2=Garage.create!(indoor: true, slots: 512, city:"Denver", zipcode:"80234", name:"Lakewood Garage", created_at: 1.days.ago)
+        @garage_3=Garage.create!(indoor: false, slots: 800, city:"Boulder", zipcode:"81032", name:"Boulder Garage", created_at: Time.current)
 
-  #   it "displays a link to sort by child count"
-  #   it "redirects to /garages and displays records in order of count of children tables"
-  #   it "displays a count of children next to each parent"
-  # end
+        @car_1 = @garage_1.cars.create!(operational: true, miles: 9090, color: "beige", owner: "Don")
+        @car_2 = @garage_1.cars.create!(operational: true, miles: 8008, color: "burgundy", owner: "Ron")
+        @car_3 = @garage_1.cars.create!(operational: true, miles: 7007, color: "tan", owner: "Prawn")
+        @car_4 = @garage_2.cars.create!(operational: true, miles: 523, color: "black", owner: "Bob")
+        @car_5 = @garage_2.cars.create!(operational: true, miles: 999, color: "grey", owner: "Tom")
+        @car_6 = @garage_3.cars.create!(operational: true, miles: 44523, color: "blue", owner: "Adam")
+      end
+
+    it "displays a link to sort by child count" do
+      visit "/garages"
+      expect(page).to have_content("Sort by Child Count")
+    end
+
+    it "link redirects to /garages and displays records in order of count of children tables" do
+      visit "/garages"
+      expect(@garage_3.name).to appear_before(@garage_2.name)
+      expect(@garage_2.name).to appear_before(@garage_1.name)
+
+      click_link("Sort by Child Count")
+      expect(page).to have_current_path("/garages?childsort=true")
+      expect(@garage_1.name).to appear_before(@garage_2.name)
+      expect(@garage_2.name).to appear_before(@garage_3.name)
+
+    end
+    it "displays a count of children next to each parent" do
+      visit "/garages"
+      expect(page).to have_content("Child Count: 1")
+      expect(page).to have_content("Child Count: 2")
+      expect(page).to have_content("Child Count: 3")
+    end
+  end
 end
