@@ -170,4 +170,14 @@ RSpec.describe "/garages", type: :feature do
     end
   end
 
+    #Extension 1
+  # describe "as a user, when I visit /garages" do
+  #   let!(:garage_1){Garage.create!(indoor: true, slots: 300, city:"Denver", zipcode:"80032", name:"Cherry Creek Garage")}
+  #   let!(:garage_2){Garage.create!(indoor: true, slots: 512, city:"Denver", zipcode:"80234", name:"Lakewood Garage")}
+  #   let!(:garage_3){Garage.create!(indoor: false, slots: 800, city:"Boulder", zipcode:"81032", name:"Boulder Garage")}
+
+  #   it "displays a link to sort by child count"
+  #   it "redirects to /garages and displays records in order of count of children tables"
+  #   it "displays a count of children next to each parent"
+  # end
 end
